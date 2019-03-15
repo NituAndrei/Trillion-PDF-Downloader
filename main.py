@@ -21,7 +21,7 @@ def selector(pdf_links):
     print('Select pdf indexes (format: 1-6,10,20,25-40)')
     selection = input()
     if (len(selection) == 0):
-        return 0
+        return -1
     i = 0
     while i < len(selection):
         if selection[i] in numbers:
@@ -29,14 +29,47 @@ def selector(pdf_links):
             while i < len(selection) and selection[i] in numbers:
                 a = a * 10 + int(selection[i])
                 i = i + 1
-            print(a, i)
-            # todo: case - and ,
+
+            if a >= len(pdf_links):
+                print('invalid input')
+                return -1   #add message
+
+            if i == len(selection):
+                if a < len(pdf_links):
+                    chosen_pdfs.append(pdf_links[a])
+                else:
+                    print('invalid input')
+                return chosen_pdfs
+
+            if selection[i] == ',':
+                if a < len(pdf_links):
+                    chosen_pdfs.append(pdf_links[a])
+                else:
+                    print('invalid input')
+                    return -1
+
+            elif selection[i] == '-':
+                b = 0
+                i=i+1
+                while i < len(selection) and selection[i] in numbers:
+                    b = b * 10 + int(selection[i])
+                    i = i + 1
+                if b >= len(pdf_links):
+                    print('invalid input')
+                    return -1   #add message
+                while a <= b:
+                    chosen_pdfs.append(pdf_links[a])
+                    a = a + 1
+
+            else:
+                print('format error')
+                return -1
         else:
-            print('invalid input')
+            print('format error')
             return -1
         i = i + 1
 
-    return pdf_links
+    return chosen_pdfs
 
 
 # url='http://www.os-book.com/OSE2/practice-exer-dir/index.html'
@@ -54,4 +87,5 @@ for i in range(len(pdf_links)):
     print('index:', i, pdf_links[i])
 
 pdf_links = selector(pdf_links)
+print(pdf_links)
 # downloader(pdf_links)
