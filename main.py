@@ -16,7 +16,7 @@ def downloader(pdf_links):
 
 
 def selector(pdf_links):
-    chosen_pdfs = []
+    chosen_pdfs = [0] * len(pdf_links)
     numbers = '0123456789'
     print('Select pdf indexes (format: 1-6,10,20,25-40)')
     selection = input()
@@ -32,33 +32,32 @@ def selector(pdf_links):
 
             if a >= len(pdf_links):
                 print('invalid input')
-                return -1   #add message
+                return -1  # add message
 
             if i == len(selection):
                 if a < len(pdf_links):
-                    chosen_pdfs.append(pdf_links[a])
+                    chosen_pdfs[a] = 1
                 else:
                     print('invalid input')
-                return chosen_pdfs
 
             if selection[i] == ',':
                 if a < len(pdf_links):
-                    chosen_pdfs.append(pdf_links[a])
+                    chosen_pdfs[a] = 1
                 else:
                     print('invalid input')
                     return -1
 
             elif selection[i] == '-':
                 b = 0
-                i=i+1
+                i = i + 1
                 while i < len(selection) and selection[i] in numbers:
                     b = b * 10 + int(selection[i])
                     i = i + 1
                 if b >= len(pdf_links):
                     print('invalid input')
-                    return -1   #add message
+                    return -1  # add message
                 while a <= b:
-                    chosen_pdfs.append(pdf_links[a])
+                    chosen_pdfs[a] = 1
                     a = a + 1
 
             else:
@@ -69,7 +68,12 @@ def selector(pdf_links):
             return -1
         i = i + 1
 
-    return chosen_pdfs
+    final = []
+    for i in range(len(chosen_pdfs)):
+        if chosen_pdfs[i] == 1:
+            final.append(pdf_links[i])
+
+    return final
 
 
 # url='http://www.os-book.com/OSE2/practice-exer-dir/index.html'
