@@ -3,11 +3,12 @@ import urllib.request
 import urllib.parse
 
 
-# choose which pdfs to download (ex: 1-6, 10, 12)
-# parse links to downloader function
+# todo: exceptions
 
 def downloader(pdf_links):
-    dl_path = 'C:/Users/Y530/Downloads/python test'
+    print('Enter download location: ')
+    #dl_path = 'C:/Users/Y530/Downloads/python test'
+    dl_path = input() # todo: input cleanup
     for pdf_link in pdf_links:
         dl_link = urllib.parse.urljoin(url, pdf_link)  # turns links into true urls
         pdf_name = pdf_link.split('/')
@@ -76,8 +77,9 @@ def selector(pdf_links):
     return final
 
 
-# url='http://www.os-book.com/OSE2/practice-exer-dir/index.html'
-url = 'http://www.os-book.com/OSE2/practice-exer-dir/index.html'
+# url = 'http://www.os-book.com/OSE2/practice-exer-dir/index.html'
+print('Enter website link: ')
+url = input()  # todo: input cleanup
 webpage = urllib.request.urlopen(url)
 webpage_src = webpage.read()
 soup = BeautifulSoup(webpage_src)
